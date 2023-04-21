@@ -9,7 +9,7 @@ urlpatterns = [
     path('events/create/<int:user_id>', views.event_create, name='event_create'),
     path('collaboration_portal/<int:user_id>', views.collaboration_portal, name='collaboration_portal'),
     path('logout/', views.logout_view, name='logout_view'),
-    path('<str:room_name>/', views.room, name='room'),
+    path('chatroom/<str:room_name>/<int:user_id>', views.room, name='room'),
 
     #STUDENT PATHS
     path('student/<int:user_id>', views.student, name='student'),
@@ -28,7 +28,7 @@ urlpatterns = [
     path('assignment_manager/<int:user_id>', views.assignment_manager, name='assignment_manager'),
     path('performance_manager/<int:user_id>', views.performance_manager, name='performance_manager'),
     path('submit_feedback', views.submit_feedback, name='submit_feedback'),
-    path('tutor_course/<int:user_id>', views.tutor_course, name='tutor_course'),
+    path('tutor_course/<str:Tid>', views.tutor_course, name='tutor_course'),
     #TUTOR PATHS (END)
 
     #MENTOR PATHS

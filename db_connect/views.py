@@ -1,12 +1,15 @@
 from django.forms import formset_factory
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseBadRequest
-from db_connect.forms import *
-from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET
+
 from db_connect.filters import *
+from db_connect.forms import *
 import datetime
+from time import timezone
 
 #HELPER FUNCTIONS
 def get_user(user):
@@ -106,8 +109,9 @@ def tutor(request, user_id):
     for cid in cids:
         course = Course_Registered.objects.get(Course_id=cid)
         if course.Course_id == cid:
-            students.append([course.A_number.Student_Name, course.A_number.A_number, course.Course_Name])  
-    return render(request, 'tutor_home.html', {'user_id': user_id, 'students': students})
+            students.append([course.A_number.Student_Name, course.A_number.A_number, course.Course_Name])
+    Tid = Tutor.objects.get(id=user_id).Tid
+    return render(request, 'tutor_home.html', {'user_id': user_id, 'students': students, 'Tid':Tid})
 
 @login_required
 def mentor(request, user_id):
@@ -129,9 +133,11 @@ def mentor(request, user_id):
 #####################################
 #VIEWS FOR ANY USER TO USE (excepts students can't use event_create)
 #####################################
-def room(request, room_name):
+@login_required
+def room(request, room_name, user_id):
     return render(request, 'chatroom.html', {
-        'room_name': room_name
+        'room_name': room_name,
+        'user_id':user_id
     })
 
 @login_required
@@ -149,9 +155,9 @@ def event_create(request, user_id):
     return render(request, 'event_create.html', {'user_id':user_id, 'form': form})
 
 @login_required
-def collaboration_portal(request):
+def collaboration_portal(request, user_id):
     #this would allow users to look up other users in the database and connect with them
-    pass
+    return HttpResponse("Work in progess.")
 #####################################
 #VIEWS FOR ANY USER (END)
 #####################################
@@ -197,14 +203,92 @@ def register_courses(request, A_number, extra):
     return render(request, 'course_register.html', {'formset': formset, 'A_number': A_number})
 
 @login_required
+@require_GET
 def my_assignments(request, user_id):
-    pass
+    try:
+      current_time = timezone.now()
+      assignments = Assignments.objects.filter(student=request.user_id,due_date__gte=current_time).order_by('due_date')
+      context = {
+        'assignments': assignments,}
+    except:
+        return HttpResponse("Oops, something went wrong! Please try again later.")
+    return render(request, 'my_assignments.html', context)
+
 @login_required
+@require_GET
 def my_schedule(request, user_id):
-    pass
+    try:
+       current_time = timezone.now()
+       events = Events.objects.filter(student=request.user,start_time__gte=current_time).order_by('start_time')
+       class_schedule = ClassSchedule.objects.filter(student=request.user,
+        start_date__lte=current_time.date(),
+        end_date__gte=current_time.date(),).order_by('day_of_week', 'start_time')
+       context = {
+        'events': events,
+        'class_schedule': class_schedule,}
+       
+    except:
+        return HttpResponse("Oops, something went wrong! Please try again later.")
+
+    return render(request, 'my_schedule.html', context)
+
 @login_required
+@require_GET
 def performance_report(request, user_id):
-    pass
+    try:
+       student = Student.objects.get(A_number=user_id)
+       courses = Course_Registered.objects.filter(A_number=student).distinct()
+       performance_data = []
+       for course in courses:
+            enrollments = enrollments.objects.filter(
+            student=request.user,
+            course=course,
+            grade__isnull=False)
+            grades = [enrollment.grade for enrollment in enrollments]
+            
+            if grades:
+               gpa = sum(grades) / len(grades)
+               letter_grade = get_letter_grade(gpa)
+            else:
+               gpa = None
+               letter_grade = None
+               feedback = Feedback.objects.filter(student=request.user,course=course).first()
+               performance_data.append({
+               'course': course,
+               'gpa': gpa,
+               'letter_grade': letter_grade,
+               'feedback': feedback,})
+            context = {'performance_data': performance_data,}
+    except:
+        return HttpResponse("Oops, something went wrong! Please try again later.")
+
+    return render(request, 'performance_report.html', context)
+
+
+
+def get_letter_grade(gpa):
+    if gpa >= 4.0:
+        return 'A'
+    elif gpa >= 3.7:
+        return 'A-'
+    elif gpa >= 3.3:
+        return 'B+'
+    elif gpa >= 3.0:
+        return 'B'
+    elif gpa >= 2.7:
+        return 'B-'
+    elif gpa >= 2.3:
+        return 'C+'
+    elif gpa >= 2.0:
+        return 'C'
+    elif gpa >= 1.7:
+        return 'C-'
+    elif gpa >= 1.3:
+        return 'D+'
+    elif gpa >= 1.0:
+        return 'D'
+    else:
+        return 'F'
 #STUDENT VIEWS (END)
 
 #TUTOR VIEWS
@@ -235,13 +319,13 @@ def assign_group(request):
     pass
 @login_required
 def assignment_manager(request, user_id):
-    pass
+    return HttpResponse("Work in progess.")
 @login_required
 def performance_manager(request, user_id):
-    pass
+    return HttpResponse("Work in progess.")
 @login_required
 def submit_feedback(request):
-    pass
+    return HttpResponse("Work in progess.")
 #TUTOR VIEWS (END)
 
 #MENTOR VIEWS
