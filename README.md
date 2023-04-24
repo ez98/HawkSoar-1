@@ -7,7 +7,7 @@ Building an applications where students can connect with others, manage their pr
 
 ### python -m pip install -U channels["daphne"]
 
-### pip install django-filter
+### python -m pip install django-filter
 
 ### To start designing, it is important you create one student, one mentor, and one tutor. To do this start the server and head over to http://127.0.0.1:8000/db_connect/ to register. 
 
