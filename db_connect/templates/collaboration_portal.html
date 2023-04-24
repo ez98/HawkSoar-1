@@ -1,0 +1,56 @@
+{% extends 'home.html' %}
+
+{% block navbar %}
+
+  {% if request.user.is_authenticated and request.user.is_tutor %}
+      {% include 'navbars/tutor_nav_bar.html' %}
+  {% else %}
+      {% include 'navbars/mentor_nav_bar.html' %}
+  {% endif %}
+
+{% endblock %}
+
+{% block content %}
+<h1>Collaboration Portal</h1>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Search a User</h1>
+        </div>
+        {% csrf_token %}
+        <form method="get">
+            {{ myFilter.form }}
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Title</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                <td>{{ user.user_type }}</td>
+                                <td><button class="btn btn-primary">Connect</button></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,21 +1,116 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title></title>
+    <style>
+        body {
+            background: url('{% static 'db_connect/images/newhawksoar.png' %}');
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding-left: 3%; /* Add padding-left to move the container */
+        }
+
+        .login-container {
+            background-color: hwb(0 98% 0%);
+            padding: 3rem;
+            border-radius: 10px;
+            border: 2px solid #c75454;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 30%; /* Added to increase the size */
+        max-width: 800px; /* Added to set a maximum width */
+        box-sizing: border-box; /* Added to include padding in the width */
+        }
+
+        .login-container h2 {
+            font-size: 2rem; /* Increase the font size */
+        font-weight: bold; /* Make the text bold */
+            margin-bottom: 1rem;
+        }
+
+        .alert {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 1.5rem; /* Increase the padding */
+        font-size: 1.2rem; /* Increase the font size */
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            margin-top: 1rem;
+        }
+        form p {
+        font-size: 1.2rem; /* Increase the font size of the form elements */
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    form label {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    form input {
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        margin-bottom: 1.5rem;
+        width: 100%;
+        max-width: 400px;
+        box-sizing: border-box;
+    }
+
+        button[type="submit"] {
+            background-color: #0056b3;
+            border: #721c24;
+            color: #f1eeee;
+            font-size: 1.2rem; /* Increase the font size */
+        font-weight: bold;
+        padding: 0.75rem 1.5rem; /* Increase the padding */
+            font-weight: bold;
+            
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h2>Login</h2>
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-danger" role="alert">
-                {{ message }}
+    <div class="login-container">
+        <h2></h2> 
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="{{ form.email.auto_id }}">Email</label>
+                {{ form.email }}
             </div>
-        {% endfor %}
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Log in</button>
-    </form>
+            <div>
+                <label for="{{ form.password.auto_id }}">Password</label>
+                {{ form.password }}
+            </div>
+            <button type="submit">Log in</button>
+        </form>
+    </div>
 </body>
 </html>

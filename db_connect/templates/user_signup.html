@@ -1,54 +1,109 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Create Event</title>
+  <meta name="viewport" content="width=device-width">
+  <meta charset="utf-8">
+  <title>Regristration</title>
+  <style>
+      body {
+          background: url('{% static 'db_connect/images/NewUserRegistration.png' %}');
+          background-size: cover;
+          font-family: Arial, sans-serif;
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+          height: 90vh;
+          margin: 0;
+          padding-left: 3%; /* Add padding-left to move the container */
+          padding-top: 105px;
+        } 
+      .signup-container {
+          background-color: hwb(0 98% 0%);
+          padding: 3rem;
+          border-radius: 10px;
+          border: 2px solid #c75454;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          width: 70%; /* Decrease the width to make it fit better */
+          max-width: 600px;
+          box-sizing: border-box;
+          display: flex; /* Add display flex */
+          flex-direction: column; /* Set flex-direction to column */
+          justify-content: flex-start; /* Align contents to the top */
+          align-items: flex-start; /* Align contents to the left */
+          padding-top: 20px;
+          margin-top: 150px;
+        }
+        label[for="major"] {
+          display: block;
+          margin-top: 0.3rem; 
+        }
+        button[type="submit"] {
+            background-color: #6eee7d;
+            border: #721c24;
+            color: hsl(0, 18%, 97%);
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 1rem 1.0rem;
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #00b306;
+        }
+  </style>
 </head>
 <body>
-    <h2>HawkSoar Registration</h2>
-    <form method="POST">
-      {% csrf_token %}
-      <label for="cwid">CWID: </label>
-      <input id="cwid" type="text" name="cwid" required><br><br>
-      <label for="major">Major: </label>
-      <select name="major" id="major">
-        <option value="" selected disabled>What's Your Major?</option>
-        <option value="Computer science">Computer science</option>
-        <option value="Mechanical engineering">Mechanical engineering</option>
-        <option value="Architectural and building sciences/technology">Architectural and building sciences/technology</option>
-        <option value="Information technology">Information technology</option>
-        <option value="Bioengineering and biomedical engineering">Bioengineering and biomedical engineering</option>
-        <option value="Chemical engineering">Chemical engineering</option>
-        <option value="Aerospace, aeronautical and astronautical/space engineering">Aerospace, aeronautical and astronautical/space engineering</option>
-        <option value="Electrical and electronics engineering">Electrical and electronics engineering</option>
-        <option value="Civil engineering">Civil engineering</option>
-        <option value="Computer engineering">Computer engineering</option>
-        <option value="Business administration and management">Business administration and management</option>
-        <option value="Engineering/industrial management">Engineering/industrial management</option>
-        <option value="Architectural engineering">Architectural engineering</option>
-        <option value="Biology/biological sciences">Biology/biological sciences</option>
-        <option value="Applied mathematics">Applied mathematics</option>
-        <option value="Chemistry">Chemistry</option>
-        <option value="Materials engineering">Materials engineering</option>
-        <option value="Computer and information sciences">Computer and information sciences</option>
-        <option value="Physics">Physics</option>
-        <option value="Research and experimental psychology">Research and experimental psychology</option>
-        <option value="Computer engineering">Computer engineering</option>
-        <option value="Astrophysics">Astrophysics</option>
-        <option value="Engineering physics/applied physics">Engineering physics/applied physics</option>
-        <option value="Biochemistry">Biochemistry</option>
-        <option value="Liberal arts and sciences, general studies and humanities">Liberal arts and sciences, general studies and humanities</option>
-        <option value="Psychology">Psychology</option>
-        <option value="Communication, journalism, and related programs">Communication, journalism, and related programs</option>
-        <option value="Artificial intelligence">Artificial intelligence</option>
-        <option value="Computer and information systems security/information assurance">Computer and information systems security/information assurance</option>
-        <option value="Liberal arts and sciences/liberal studies">Liberal arts and sciences/liberal studies</option>
-        <option value="International/global studies">International/global studies</option>
-        <option value="Environmental chemistry">Environmental chemistry</option>
-        <option value="Development economics and international development">Development economics and international development</option>
-      </select>
-      <br>
-      {{ form.as_p }}
-      <button type="submit">Sign Up</button>
-    </form>
+    <div class="signup-container">
+        <h2></h2>
+        <form method="POST">
+          {% csrf_token %}
+          <label for="cwid">CWID: </label>
+          <input id="cwid" type="text" name="cwid" required>
+          <label for="major">Major: </label>
+          <select name="major" id="major">
+            <option value="" selected disabled>What's Your Major?</option>
+            <option value="Computer science">Computer science</option>
+            <option value="Mechanical engineering">Mechanical engineering</option>
+            <option value="Architectural and building sciences/technology">Architectural and building sciences/technology</option>
+            <option value="Information technology">Information technology</option>
+            <option value="Bioengineering and biomedical engineering">Bioengineering and biomedical engineering</option>
+            <option value="Chemical engineering">Chemical engineering</option>
+            <option value="Aerospace, aeronautical and astronautical/space engineering">Aerospace, aeronautical and astronautical/space engineering</option>
+            <option value="Electrical and electronics engineering">Electrical and electronics engineering</option>
+            <option value="Civil engineering">Civil engineering</option>
+            <option value="Computer engineering">Computer engineering</option>
+            <option value="Business administration and management">Business administration and management</option>
+            <option value="Engineering/industrial management">Engineering/industrial management</option>
+            <option value="Architectural engineering">Architectural engineering</option>
+            <option value="Biology/biological sciences">Biology/biological sciences</option>
+            <option value="Applied mathematics">Applied mathematics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Materials engineering">Materials engineering</option>
+            <option value="Computer and information sciences">Computer and information sciences</option>
+            <option value="Physics">Physics</option>
+            <option value="Research and experimental psychology">Research and experimental psychology</option>
+            <option value="Computer engineering">Computer engineering</option>
+            <option value="Astrophysics">Astrophysics</option>
+            <option value="Engineering physics/applied physics">Engineering physics/applied physics</option>
+            <option value="Biochemistry">Biochemistry</option>
+            <option value="Liberal arts and sciences, general studies and humanities">Liberal arts and sciences, general studies and humanities</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Communication, journalism, and related programs">Communication, journalism, and related programs</option>
+            <option value="Artificial intelligence">Artificial intelligence</option>
+            <option value="Computer and information systems security/information assurance">Computer and information systems security/information assurance</option>
+            <option value="Liberal arts and sciences/liberal studies">Liberal arts and sciences/liberal studies</option>
+            <option value="International/global studies">International/global studies</option>
+            <option value="Environmental chemistry">Environmental chemistry</option>
+            <option value="Development economics and international development">Development economics and international development</option>
+    
+          </select>
+        
+          {{ form.as_p }}
+          <button type="submit">Sign Up</button>
+        </form>
+    </div>
 </body>
 </html>

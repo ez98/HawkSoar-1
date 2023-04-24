@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
+from django.db.models import Q
 
 from db_connect.filters import *
 from db_connect.forms import *
@@ -107,9 +108,10 @@ def tutor(request, user_id):
         cids.append(object.course_id)
     students = []
     for cid in cids:
-        course = Course_Registered.objects.get(Course_id=cid)
-        if course.Course_id == cid:
-            students.append([course.A_number.Student_Name, course.A_number.A_number, course.Course_Name])
+        courses = Course_Registered.objects.filter(Course_id=cid)
+        for c in courses:
+            if c.Course_id == cid:
+                students.append([c.A_number.Student_Name, c.A_number.A_number, c.Course_Name])
     Tid = Tutor.objects.get(id=user_id).Tid
     return render(request, 'tutor_home.html', {'user_id': user_id, 'students': students, 'Tid':Tid})
 
@@ -142,22 +144,27 @@ def room(request, room_name, user_id):
 
 @login_required
 def event_create(request, user_id):
+    
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
             if request.user.user_type == 'tutor':
-                return redirect('tutor')
+                return redirect('tutor', user_id)
             if request.user.user_type == 'mentor':
-                return redirect('mentor')
+                return redirect('mentor', user_id)
     else:
         form = EventForm()
     return render(request, 'event_create.html', {'user_id':user_id, 'form': form})
 
 @login_required
-def collaboration_portal(request, user_id):
-    #this would allow users to look up other users in the database and connect with them
-    return HttpResponse("Work in progess.")
+def collaboration_portal(request, user_id): 
+    users = User.objects.all()
+    myFilter = UserFilter(request.GET, queryset=users)
+    users = myFilter.qs
+    context = { 'users':users, 'myFilter':myFilter, 'user_id':user_id }
+
+    return render(request, 'collaboration_portal.html', context)
 #####################################
 #VIEWS FOR ANY USER (END)
 #####################################
@@ -172,7 +179,7 @@ def event_signup(request, user_id):
     user = get_user(request.user)
     print("GOT USER PROFILE,", user)
     if request.method == 'POST':
-        event_pk = request.POST.get('event')
+        event_pk = request.POST.get('event_pk')
         event = Events.objects.get(pk=event_pk)
         has_events = Has_Events(A_number=user, event_id=event, event_name=event, event_date=event)
         has_events.save()
