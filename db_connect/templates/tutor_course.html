@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Select Courses</title>
     <!-- Include Bootstrap CSS and JavaScript files -->
@@ -8,17 +9,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
+
 <body>
+    <div class="title">
+        <h1>Select The Course(s) You Tutor</h1>
+    </div>
     <div class="container">
+        <form method="get" style="margin-bottom: 1%;">
+            {{ myFilter.form }}
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
         <div class="card">
-            <div class="card-header">
-                <h1>Select The Course(s) You Tutor</h1>
-            </div>
             {% csrf_token %}
-            <form method="get">
-                {{ myFilter.form }}
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
@@ -35,7 +37,8 @@
                                 {% for course in courses %}
                                 <tr>
                                     <td>
-                                        <input type="checkbox" id="course{{ forloop.counter }}" name="courses[]" value="{{ course.Course_id }}-{{ course.Course_Name }}">
+                                        <input type="checkbox" id="course{{ forloop.counter }}" name="courses[]"
+                                            value="{{ course.Course_id }}-{{ course.Course_Name }}">
                                     </td>
                                     <td>{{ course.Course_id }}</td>
                                     <td>{{ course.Course_Name }}</td>
@@ -51,4 +54,56 @@
         </div>
     </div>
 </body>
+
 </html>
+
+<style>
+    body {
+        background: hwb(0 98% 0%);
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        margin: 0;
+        padding-left: 3%;
+        /* Add padding-left to move the container */
+        padding-top: 30px;
+    }
+
+    .title {
+        color: #a73b3b;
+        font-size: 3rem;
+
+    }
+
+    .container {
+        background-color: hwb(0 98% 0%);
+        padding: 2rem;
+        border-radius: 10px;
+        border: 2px solid #c75454;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        /* Added to include padding in the width */
+        margin-left: 5%;
+        margin-top: 2%;
+    }
+
+    label {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    button {
+        background-color: #0455ac;
+        border: #721c24;
+        color: #f1eeee;
+        font-size: 1.2rem;
+        /* Increase the font size */
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+</style>

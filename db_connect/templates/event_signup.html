@@ -1,20 +1,23 @@
 {% extends 'home.html' %}
 
 {% block navbar %}
-  {% include 'navbars/student_nav_bar.html' %}
+{% include 'navbars/student_nav_bar.html' %}
 {% endblock %}
 
 {% block content %}
-<table class="table">
-  <thead>
-    <tr>
-      <th>Event Name</th>
-      <th>Event Date</th>
-      <th>Sign Up</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for event in events %}
+
+<body>
+  <div class="title">Upcoming Events</div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Event Date</th>
+        <th>Sign Up</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in events %}
       <tr>
         <td>{{ event.event_name }}</td>
         <td>{{ event.event_date }}</td>
@@ -26,10 +29,34 @@
           </form>
         </td>
       </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endblock %}   
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+
+
+<style>
+  body {
+    background: hwb(0 98% 0%);
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 90vh;
+    margin: 0;
+    padding-left: 3%;
+    /* Add padding-left to move the container */
+    padding-top: 30px;
+  }
+
+  .title {
+    color: #a73b3b;
+    font-size: 3rem;
+    margin-bottom: 2%;
+  }
+</style>
+
+{% endblock %}
 
 <!-- <!DOCTYPE html>
 <html>
@@ -41,13 +68,13 @@
   {% block events %}
     <form method="POST">
         {% csrf_token %} -->
-        <!-- <label for="event">Select an event:</label>
+<!-- <label for="event">Select an event:</label>
         <select name="event">
           {% for event in events %}
             <option value="{{ event.pk }}">{{ event.event_name }} - {{event.event_date}}</option>
           {% endfor %}
         </select><br> -->
-        <!-- <div class="form-group">
+<!-- <div class="form-group">
           <label for="event">Select an event:</label>
           <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,6 +90,7 @@
       <input type="submit" class="btn btn-primary" value="Sign Up">
         <input type="submit" value="Sign Up">
       </form> -->
-  <!-- {% endblock %}   
+<!-- {% endblock %}   
 </body> -->
+
 </html>

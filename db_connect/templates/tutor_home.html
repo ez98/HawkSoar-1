@@ -1,128 +1,133 @@
 {% extends 'home.html' %}
 
 {% block navbar %}
-    {% include 'navbars/tutor_nav_bar.html' %}
+{% include 'navbars/tutor_nav_bar.html' %}
 {% endblock %}
 
 {% block content %}
 
 <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-4">
-       
-        <h2 class="heading-box">Student Performance Monitor</h2>
-            <table class="table table-striped table-bordered table-assignments">
-                <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Course</th>
-                        <th>Grade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- {% for a in assignments %}
+  <div class="row">
+    <div class="col-md-4">
+
+      <h2 class="heading-box">Student Performance Monitor</h2>
+      <table class="table table-striped table-bordered table-assignments">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- {% for a in assignments %}
                         <tr>
                             <td>{{ a.Assignment_Name }}</td>
                             <td>{{ a.Due_Date }}</td>
                             <td>{{ a.Submit_Status }}</td>
                         </tr>
                     {% endfor %} -->
-                </tbody>
-            </table> 
-      </div>
-      <div class="col-md-8">        
-        <h2 class="heading-box">Performance Feedback Manager</h2>
-        <table class="table table-striped table-bordered table-assignments">
-          <thead>
-            <tr>
-              <th>Student</th>
-              <th>CWID</th>
-              <th>Course</th>
-              <th>Feedback</th>
-              <th>Attachments</th>
-              <th>Submit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for student in students %}
-              <tr>
-                {% for s in student %}
-                <td>{{ s }}</td>
-                {% endfor %}
-                <td>
-                  <form method="POST" action="{% url 'submit_feedback' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="student_id" value="feedback">
-                    <textarea name="feedback" rows="3"></textarea>
-                </td>
-                <td>
-                    <div class="input-group mb-3" >  
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="attachment" id="attachment-{{ forloop.counter0 }}">
-                            <label class="custom-file-label" for="attachment-{{ forloop.counter0 }}">Choose file</label>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-                </td>
-              </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-8">
+      <h2 class="heading-box" style="margin-left: 10%;">Performance Feedback Manager</h2>
+      <table class="table table-striped table-bordered table-assignments" style="margin-left: 10%;">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>CWID</th>
+            <th>Course</th>
+            <th>Feedback</th>
+            <th>Attachments</th>
+            <th>Submit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in students %}
+          <tr>
+            {% for s in student %}
+            <td>{{ s }}</td>
             {% endfor %}
-          </tbody>
-        </table>        
-      </div>
+            <td>
+              <form method="POST" action="{% url 'submit_feedback' %}">
+                {% csrf_token %}
+                <input type="hidden" name="student_id" value="feedback">
+                <textarea name="feedback" rows="3"></textarea>
+            </td>
+            <td>
+              <div class="input-group mb-3">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" name="attachment" id="attachment-{{ forloop.counter0 }}">
+                  <label class="custom-file-label" for="attachment-{{ forloop.counter0 }}">Choose file</label>
+                </div>
+              </div>
+            </td>
+            <td>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
 
-  <style>
-    .heading-box {
-        display: inline-block;
-        padding: 10px;
-        border: 2px solid #333;
-        border-radius: 10px;
-        margin-bottom: 20px;
-        font-weight: bold;
-        text-transform:none;
-        margin-top: 20px;
-        box-shadow: 0 0 5px rgba(235, 6, 6, 0.705);
-        font-size: 14px;
-        margin-left: 300px;
-        text-align: center;
-        width: 190px;
-      
-    }
+<style>
+  body {
+    background: hwb(0 98% 0%);
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    justify-content: flex-start;
+    align-items: center;
+    height: 90vh;
+    padding-left: 5%;
+    /* Add padding-left to move the container */
+    padding-top: 50px;
+  }
 
-   
-table.table-assignments {
-  font-size: 14px;
-  font-family: calc(), sans-serif;
-  font-weight: normal;
-  box-shadow: 0 0 10px rgba(17, 17, 17, 0.705);
-  text-overflow: ellipsis;
+  .heading-box {
+    display: inline-block;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid #c75454;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: auto;
+    padding: 15px 30px;
+    margin-bottom: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    text-transform: none;
+  }
+
+  table.table-assignments {
+    font-size: 14px;
+    font-family: calc(), sans-serif;
+    font-weight: normal;
+    box-shadow: 0 0 10px rgba(17, 17, 17, 0.705);
+    background-color: white;
+    text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 270px;
-    width: 100%;
+    max-width: 450px;
+    width: 150%;
     overflow: hidden;
-    margin-left: 300px;   
+    margin-top: 20px;
+
+  }
+
+  table.table-assignments th {
+    font-size: 14px;
+    font-family: calc(), sans-serif;
+    font-weight: bold;
     
-}
+  }
 
-
-table.table-assignments th {
-  font-size: 14px;
-  font-family: calc(), sans-serif;
-  font-weight:bold;
-  
-}
-
-
-table.table-assignments td {
-  font-size: 14px;
-  font-family: calc(), sans-serif;
-  font-weight: normal;
- 
-}
-
+  table.table-assignments td {
+    font-size: 14px;
+    font-family: calc(), sans-serif;
+    font-weight: normal;
+  }
 </style>
 {% endblock %}

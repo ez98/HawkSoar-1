@@ -1,23 +1,84 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+
 <head>
-    <title>Select Number of Courses</title>
+    <style>
+        body {
+            background: hwb(0 98% 0%);
+            font-family: Arial, sans-serif;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 90vh;
+            margin: 0;
+            padding-left: 3%;
+            /* Add padding-left to move the container */
+            padding-top: 105px;
+        }
+
+        .container {
+            background-color: hwb(0 98% 0%);
+            padding: 3rem;
+            border-radius: 10px;
+            border: 2px solid #c75454;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 30%;
+            /* Added to increase the size */
+            max-width: 800px;
+            /* Added to set a maximum width */
+            box-sizing: border-box;
+            /* Added to include padding in the width */
+            margin: auto;
+        }
+
+        label {
+            color: #a73b3b;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        button[type="submit"] {
+            background-color: #0056b3;
+            border: #721c24;
+            color: #f1eeee;
+            font-size: 1.2rem;
+            /* Increase the font size */
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            /* Increase the padding */
+            font-weight: bold;
+
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    </style>
 </head>
+
+
+<html>
+
 <body>
-    <h1>Select Number of Courses</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="num_courses">How many courses are you taking?</label>
-        <select id="num_courses" name="num_courses">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-        </select>
-        <br><br>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="container">
+
+        <body>
+            <label>Select Number of Courses</label>
+            <form method="post">
+                {% csrf_token %}
+                <p for="num_courses">How many courses are you taking?</p>
+                <select id="num_courses" name="num_courses">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+                <br><br>
+                <button type="submit">Submit</button>
+            </form>
+        </body>
+    </div>
 </body>
+
 </html>
