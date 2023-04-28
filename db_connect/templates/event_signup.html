@@ -43,7 +43,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     height: 90vh;
-    margin: 0;
+    padding-right: 8%;
     padding-left: 3%;
     /* Add padding-left to move the container */
     padding-top: 30px;
@@ -52,7 +52,32 @@
   .title {
     color: #a73b3b;
     font-size: 3rem;
-    margin-bottom: 2%;
+
+  }
+
+  table{
+    font-size: 14px;
+    font-family: calc(), sans-serif;
+    font-weight: normal;
+    box-shadow: 0 0 10px rgba(17, 17, 17, 0.705);
+    background-color: white;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 3%;
+  
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th:last-child,
+  td:last-child {
+    width: 10px;
+    /* Set a smaller width for the last column */
   }
 </style>
 
